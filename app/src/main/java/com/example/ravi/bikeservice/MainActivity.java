@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.facebook.accountkit.AccessToken;
+import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
@@ -31,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        callLoginScreen();
+        checkExistingUser();
+
 
 
        /* loggedin = pref.getBoolean("state", false);
@@ -59,6 +62,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void checkExistingUser() {
+        AccessToken accessToken = AccountKit.getCurrentAccessToken();
+
+        Log.d(TAG, "checkExistingUser: " + accessToken);
+        if (accessToken != null) {
+            Intent c = new Intent(getApplicationContext(), Registar.class);
+            startActivity(c);
+        } else {
+            //Handle new or logged out user
+            callLoginScreen();
+        }
+
+    }
+
     private void callLoginScreen() {
 
 
@@ -66,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
                 new AccountKitConfiguration.AccountKitConfigurationBuilder(
                         LoginType.PHONE,
-                        AccountKitActivity.ResponseType.CODE); // or .ResponseType.TOKEN
+                        AccountKitActivity.ResponseType.TOKEN); // or .ResponseType.TOKEN
         // ... perform additional configuration ...
         intent.putExtra(
                 AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
@@ -83,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
             final int resultCode,
             final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult1:_" + requestCode);
-        if (requestCode == APP_REQUEST_CODE) {
-
+        Log.d(TAG, "onActivityResult1:_out if" + getAccessToken());
+        if (getAccessToken()!=null) {
+            Log.d(TAG, "onActivityResult1:_if1" + getAccessToken());
             // confirm that this response matches your request
             AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
             String toastMessage;
@@ -102,11 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 if (loginResult.getAccessToken() != null) {
                     toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
                     Log.d(TAG, "onActivityResult: login....!!!!!!!!1");
-                } else {
-                    Log.d(TAG, "onActivityResult6:_");
                     Intent c = new Intent(getApplicationContext(), Registar.class);
                     startActivity(c);
-                    Log.d(TAG, "onActivityResult7:_");
                 }
 
                 // If you have an authorization code, retrieve it from
@@ -134,5 +148,10 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         isSecondTime = true;
+    }
+
+    private AccessToken getAccessToken(){
+        Log.d(TAG, "getAccessToken: "+AccountKit.getCurrentAccessToken());
+       return AccountKit.getCurrentAccessToken();
     }
 }
