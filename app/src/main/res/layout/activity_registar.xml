@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:src="@drawable/bike" />
+
+    <Button
+        android:id="@+id/registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginRight="40dp"
+        android:background="#bad7df"
+        android:gravity="center_horizontal"
+        android:text="Registration"
+        android:textSize="25sp" />
+    <!--<Button
+        android:id="@+id/driver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#bad7df"
+        android:text="Driver"
+        android:textSize="25sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <Button
+        android:id="@+id/rider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#bad7df"
+        android:text="Rider"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+    -->
+</LinearLayout>
