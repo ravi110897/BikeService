@@ -143,6 +143,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+    public void search(View view) throws IOException {
+        EditText editText=findViewById(R.id.locationid);
+        String location=editText.getText().toString();
+
+        Geocoder geocoder= new Geocoder(this);
+        List<Address> list= geocoder.getFromLocationName(location,1);
+        Address address= list.get(0);
+        String locality = address.getLocality();
+        Toast.makeText(this,locality,Toast.LENGTH_LONG).show();
+        double lat=address.getLatitude();
+        double lng=address.getLongitude();
+        gotoLocation(lat,lng,15);
+        LatLng latLng=new LatLng(lat,lng);
+        mMap.addMarker(new MarkerOptions().position(latLng).title(location).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+
+    }
+
+    private void gotoLocation(double lat,double lng,float zoom)
+    {
+        LatLng latLng=new LatLng(lat,lng);
+        CameraUpdate cameraUpdate= CameraUpdateFactory.newLatLngZoom(latLng,zoom);
+        mMap.animateCamera(cameraUpdate);
+    }
+
+
 }
 
 
