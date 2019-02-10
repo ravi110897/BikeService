@@ -22,7 +22,6 @@
         android:layout_marginTop="110dp"
         android:layout_marginRight="40dp"
         android:background="#bad7df"
-        android:gravity="center_horizontal"
         android:text="Registration"
         android:textSize="25sp" />
     <!--<Button
