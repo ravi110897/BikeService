@@ -43,10 +43,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     Location mLastLocation;
-    Marker mCurrLocationMarker;
+    Marker mCurrLocationMarker,marker;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     private EditText address;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +150,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void search(View view) throws IOException {
+
+        if (null !=marker) {
+            marker.remove();
+        }
         EditText editText=findViewById(R.id.locationid);
         String location=editText.getText().toString();
 
@@ -161,9 +166,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double lng=address.getLongitude();
         gotoLocation(lat,lng,15);
         LatLng latLng=new LatLng(lat,lng);
-        mMap.addMarker(new MarkerOptions().position(latLng).title(location).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+
+
+       marker = mMap.addMarker(new MarkerOptions().position(latLng).title(location).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+
+
 
     }
+
+
 
     private void gotoLocation(double lat,double lng,float zoom)
     {
@@ -198,6 +209,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 
 
 }

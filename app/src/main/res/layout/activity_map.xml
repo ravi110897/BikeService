@@ -14,25 +14,23 @@
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="61dp"
-        android:hint="Search Location"
+        android:hint="Current Location"
         android:lines="1"
-        android:focusable="false"/>
+        android:focusable="auto"/>
 
     <EditText
         android:id="@+id/locationid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="118dp"
         android:hint="Where to.....?"
-        android:focusable="true"/>
+        android:focusable="true"
+        android:lines="1"/>
 
 
     <Button
