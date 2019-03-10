@@ -2,11 +2,14 @@ package com.example.ravi.bikeservice;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -32,6 +35,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +45,8 @@ import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         LocationListener,GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener,GoogleMap.OnPolylineClickListener,
+        GoogleMap.OnPolygonClickListener{
 
     private GoogleMap mMap;
     Location mLastLocation;
@@ -80,6 +87,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
+        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+                .clickable(true)
+                .add(
+                        new LatLng(-35.016, 143.321),
+                        new LatLng(-34.747, 145.592),
+                        new LatLng(-34.364, 147.891),
+                        new LatLng(-33.501, 150.217),
+                        new LatLng(-32.306, 149.248),
+                        new LatLng(-32.491, 147.309)));
+
+        // Position the map's camera near Alice Springs in the center of Australia,
+        // and set the zoom factor so most of Australia shows on the screen.
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-23.684, 133.903), 4));
+
+        // Set listeners for click events.
+        googleMap.setOnPolylineClickListener(this);
+        googleMap.setOnPolygonClickListener(this);
 
     }
 
@@ -151,6 +176,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void search(View view) throws IOException {
 
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ProgressDialog dialog = ProgressDialog.show(MapsActivity.this, "", "Loading. Please wait for the Bike List...", true);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        startActivity(new Intent(MapsActivity.this, BikeListActivity.class));
+                    }
+                },2600);
+            }
+        }, 4000);
+
         if (null !=marker) {
             marker.remove();
         }
@@ -211,9 +252,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    @Override
+    public void onPolygonClick(Polygon polygon) {
 
+    }
 
+    @Override
+    public void onPolylineClick(Polyline polyline) {
 
+    }
 }
 
 
