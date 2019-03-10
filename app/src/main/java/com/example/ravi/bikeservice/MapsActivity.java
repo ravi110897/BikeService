@@ -180,7 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ProgressDialog dialog = ProgressDialog.show(MapsActivity.this, "", "Loading. Please wait for the Bike List...", true);
+                ProgressDialog dialog = ProgressDialog.show(MapsActivity.this, "", "Loading...Please wait for the Driver List...", true);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
