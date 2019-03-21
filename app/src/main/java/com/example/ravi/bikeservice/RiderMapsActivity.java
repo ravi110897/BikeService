@@ -1,7 +1,6 @@
 package com.example.ravi.bikeservice;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,10 +9,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -43,7 +39,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class RiderMapsActivity extends FragmentActivity implements OnMapReadyCallback,
         LocationListener,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,GoogleMap.OnPolylineClickListener,
         GoogleMap.OnPolygonClickListener{
@@ -59,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_rider_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -180,15 +176,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ProgressDialog dialog = ProgressDialog.show(MapsActivity.this, "", "Loading...Please wait for the Driver List...", true);
+                final ProgressDialog dialog = ProgressDialog.show(RiderMapsActivity.this, "", "Loading...Please wait for the Driver List...", true);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                        startActivity(new Intent(MapsActivity.this, BikeListActivity.class));
+                        dialog.dismiss();
+                        startActivity(new Intent(RiderMapsActivity.this, BikeListActivity.class));
                     }
-                },2600);
+                },3000);
             }
         }, 4000);
 
@@ -225,7 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void getAddress(double lat, double lng) {
-        Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(RiderMapsActivity.this, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
             Address obj = addresses.get(0);

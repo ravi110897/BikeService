@@ -12,6 +12,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Registration extends AppCompatActivity {
 
     private static final String TAG = Registration.class.getSimpleName();
@@ -24,6 +27,10 @@ public class Registration extends AppCompatActivity {
     private TextView tv;
     private boolean isdriver;
     private Button register;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private EditText editTextPhoneNo;
+    private EditText editTextUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,10 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         initViews();
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Registeration");
+
     }
 
     private void initViews() {
@@ -42,20 +53,38 @@ public class Registration extends AppCompatActivity {
         tv1 = findViewById(R.id.tv1);
         tv = findViewById(R.id.tv);
         register = findViewById(R.id.register);
+        editTextPhoneNo = findViewById(R.id.editTextPhoneNo);
+        editTextUserName = findViewById(R.id.editTextUserName);
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (isdriver) {
-                    Toast.makeText(getBaseContext(),"Register as a Driver.",Toast.LENGTH_SHORT).show();
+
+
+                    myRef = myRef.child("Driver").child(editTextPhoneNo.getText().toString());
+                            /*.child("UserName").setValue(editTextUserName.getText().toString())
+                            .child("Phone_No").setValue(editTextPhoneNo.getText().toString());*/
+
+                    myRef.child("UserName").setValue(editTextUserName.getText().toString());
+                    myRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
+
+
+                    Toast.makeText(getBaseContext(), "Register as a Driver.", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: 2");
                     Intent c = new Intent(Registration.this, DriverMapActivity.class);
                     startActivity(c);
                 } else {
-                    Toast.makeText(getBaseContext(),"Register as a Rider.",Toast.LENGTH_SHORT).show();
+
+
+                    myRef.child("Rider").push().setValue(1213);
+
+
+                    Toast.makeText(getBaseContext(), "Register as a Rider.", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: 3");
-                    Intent c = new Intent(Registration.this, MapsActivity.class);
+                    Intent c = new Intent(Registration.this, RiderMapsActivity.class);
                     startActivity(c);
                 }
 

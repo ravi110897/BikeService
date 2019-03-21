@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "941400987810",
+    "firebase_url": "https://bikeservice-6fa40.firebaseio.com",
+    "project_id": "bikeservice-6fa40",
+    "storage_bucket": "bikeservice-6fa40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941400987810:android:4691c5055ae9849b",
+        "android_client_info": {
+          "package_name": "com.example.ravi.bikeservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941400987810-jfkrlrpqtka2ov78cnf22u1qs82ggsfm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ravi.bikeservice",
+            "certificate_hash": "7b5dafb07eab95e65a9c5f7a56671072ecea5411"
+          }
+        },
+        {
+          "client_id": "941400987810-qtm0t90i3qo5m7mg5hpra5q0dtmhramd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sUHkOmGS2DkEMVUv4vpa25J5puTYYf0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941400987810-qtm0t90i3qo5m7mg5hpra5q0dtmhramd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
