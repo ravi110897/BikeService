@@ -50,7 +50,7 @@ public class Registration extends AppCompatActivity {
                 if (isdriver) {
                     Toast.makeText(getBaseContext(),"Register as a Driver.",Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: 2");
-                    Intent c = new Intent(Registration.this, MapsActivity.class);
+                    Intent c = new Intent(Registration.this, DriverMapActivity.class);
                     startActivity(c);
                 } else {
                     Toast.makeText(getBaseContext(),"Register as a Rider.",Toast.LENGTH_SHORT).show();
