@@ -36,11 +36,13 @@ public class BikeListActivity extends AppCompatActivity {
 
         myRef = myRef.child("Driver");
 
+        Log.d(TAG, "onCreate: called ak:" + myRef);
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if(adapter==null){
-            adapter = new BikeListAdapter(userModels);
+        if (adapter == null) {
+            adapter = new BikeListAdapter(userModels, this);
         }
         recyclerView.setAdapter(adapter);
 
@@ -53,8 +55,10 @@ public class BikeListActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
 //                String value = dataSnapshot.getValue(String.class);
                 userModels = new ArrayList<>();
-                UserModel userModel = new UserModel();
+                UserModel userModel;
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    userModel = new UserModel();
+                    Log.d(TAG, "onDataChange: called ak vals:" + dataSnapshot1.getValue());
                     if (dataSnapshot1.child("UserName").getValue() == null) {
                         userModel.setUserName("empty");
                     } else {
@@ -67,7 +71,7 @@ public class BikeListActivity extends AppCompatActivity {
                         userModel.setPhoneNo(dataSnapshot1.child("Phone_No").getValue().toString());
                     }
                     userModels.add(userModel);
-                    Log.d(TAG, "onDataChange: called ak 1:"+userModels.size());
+                    Log.d(TAG, "onDataChange: called ak 1:" + userModels.size());
                 }
                 adapter.setData(userModels);
             }

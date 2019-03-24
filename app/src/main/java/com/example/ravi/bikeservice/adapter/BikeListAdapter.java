@@ -1,5 +1,8 @@
 package com.example.ravi.bikeservice.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,13 +21,18 @@ import com.example.ravi.bikeservice.pojo_modal.UserModel;
 import java.util.List;
 
 
+
+
 public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHolder> {
     private static final String TAG = BikeListAdapter.class.getSimpleName();
     private List<UserModel> listdata;
+    private  AlertDialog.Builder builder;
+    private Context context;
 
     // RecyclerView recyclerView;
-    public BikeListAdapter(List<UserModel> listdata) {
+    public BikeListAdapter(List<UserModel> listdata, Context context) {
         this.listdata = listdata;
+        this.context = context;
     }
 
     @Override
@@ -37,9 +45,44 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.textView.setText(listdata.get(position).getUserName());
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogBox(position);
+            }
+        });
     }
+
+    private void showDialogBox(int position){
+
+        builder = new AlertDialog.Builder(context);
+        builder.setMessage(listdata.get(position).getUserName()+"\n"+listdata.get(position).getPhoneNo()) .setTitle("Driver Data")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+    }
+
+
+
+
 
 
     @Override
@@ -69,4 +112,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
         }
     }
+
+
+
 }

@@ -28,9 +28,11 @@ public class Registration extends AppCompatActivity {
     private boolean isdriver;
     private Button register;
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private DatabaseReference driverRef;
     private EditText editTextPhoneNo;
     private EditText editTextUserName;
+    private DatabaseReference riderRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,8 @@ public class Registration extends AppCompatActivity {
         initViews();
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Registeration");
+        driverRef = database.getReference("Registeration").child("Driver");
+        riderRef =  database.getReference("Registeration").child("Rider");
 
     }
 
@@ -63,13 +66,16 @@ public class Registration extends AppCompatActivity {
 
                 if (isdriver) {
 
+                    DatabaseReference tempRef = null;
 
-                    myRef = myRef.child("Driver").child(editTextPhoneNo.getText().toString());
+                    Log.d(TAG, "onClick: called:" + tempRef);
+
+                    tempRef = driverRef.child(editTextPhoneNo.getText().toString());
                             /*.child("UserName").setValue(editTextUserName.getText().toString())
                             .child("Phone_No").setValue(editTextPhoneNo.getText().toString());*/
 
-                    myRef.child("UserName").setValue(editTextUserName.getText().toString());
-                    myRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
+                    tempRef.child("UserName").setValue(editTextUserName.getText().toString());
+                    tempRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
 
 
                     Toast.makeText(getBaseContext(), "Register as a Driver.", Toast.LENGTH_SHORT).show();
@@ -78,9 +84,14 @@ public class Registration extends AppCompatActivity {
                     startActivity(c);
                 } else {
 
+                    DatabaseReference tempRef = null;
+//                    driverRef.child("Rider").push().setValue(1213);
+                    tempRef = riderRef.child(editTextPhoneNo.getText().toString());
+                            /*.child("UserName").setValue(editTextUserName.getText().toString())
+                            .child("Phone_No").setValue(editTextPhoneNo.getText().toString());*/
 
-                    myRef.child("Rider").push().setValue(1213);
-
+                    tempRef.child("UserName").setValue(editTextUserName.getText().toString());
+                    tempRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
 
                     Toast.makeText(getBaseContext(), "Register as a Rider.", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: 3");
