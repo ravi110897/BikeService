@@ -21,6 +21,8 @@ import java.util.List;
 public class BikeListActivity extends AppCompatActivity {
 
     private static final String TAG = BikeListActivity.class.getSimpleName();
+    private List<UserModel> userModels;
+    private BikeListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,14 @@ public class BikeListActivity extends AppCompatActivity {
 
         myRef = myRef.child("Driver");
 
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if(adapter==null){
+            adapter = new BikeListAdapter(userModels);
+        }
+        recyclerView.setAdapter(adapter);
+
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -42,12 +52,24 @@ public class BikeListActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 //                String value = dataSnapshot.getValue(String.class);
-                List<UserModel> userModels = new ArrayList<>();
+                userModels = new ArrayList<>();
+                UserModel userModel = new UserModel();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "on dataa chnages:1::" + dataSnapshot1.getKey());
+                    if (dataSnapshot1.child("UserName").getValue() == null) {
+                        userModel.setUserName("empty");
+                    } else {
+                        userModel.setUserName(dataSnapshot1.child("UserName").getValue().toString());
+                    }
 
+                    if (dataSnapshot1.child("Phone_No").getValue() == null) {
+                        userModel.setPhoneNo("empty");
+                    } else {
+                        userModel.setPhoneNo(dataSnapshot1.child("Phone_No").getValue().toString());
+                    }
+                    userModels.add(userModel);
+                    Log.d(TAG, "onDataChange: called ak 1:"+userModels.size());
                 }
-
+                adapter.setData(userModels);
             }
 
             @Override
@@ -74,13 +96,5 @@ public class BikeListActivity extends AppCompatActivity {
                 new BikeListData("Kevin.", android.R.drawable.ic_dialog_alert),
                 new BikeListData("Shub.", android.R.drawable.ic_dialog_map),*/
         };
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        BikeListAdapter adapter = new BikeListAdapter(myListData);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-
     }
 }
