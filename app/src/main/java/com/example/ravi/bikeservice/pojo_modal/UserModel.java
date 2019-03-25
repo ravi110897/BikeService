@@ -11,6 +11,9 @@ public class UserModel {
     @SerializedName("UserName")
     @Expose
     public String userName;
+    @SerializedName("Bike_NO")
+    @Expose
+    public String bikeNo;
 
     public String getPhoneNo() {
         return phoneNo;
@@ -27,5 +30,15 @@ public class UserModel {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public String getBike_NO() {
+        return bikeNo;
+    }
+
+    public void setBike_No(String bikeNo) {
+        this.bikeNo = bikeNo;
+    }
+
+
 
 }

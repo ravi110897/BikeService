@@ -19,9 +19,6 @@ public class Registration extends AppCompatActivity {
 
     private static final String TAG = Registration.class.getSimpleName();
     private Switch switch1;
-    private EditText bikeno;
-    private EditText license;
-    private EditText rc_book;
     //    private EditText ;
     private TextView tv1;
     private TextView tv;
@@ -32,6 +29,9 @@ public class Registration extends AppCompatActivity {
     private EditText editTextPhoneNo;
     private EditText editTextUserName;
     private DatabaseReference riderRef;
+    private EditText editTextBikeNo;
+    private EditText editTextLicense;
+    private EditText editTextRc_Book;
 
 
     @Override
@@ -50,14 +50,16 @@ public class Registration extends AppCompatActivity {
     private void initViews() {
 
         switch1 = findViewById(R.id.switch1);
-        bikeno = findViewById(R.id.bikeno);
-        license = findViewById(R.id.license);
-        rc_book = findViewById(R.id.rc_book);
+        editTextBikeNo = findViewById(R.id.editTextBikeNo);
+
         tv1 = findViewById(R.id.tv1);
         tv = findViewById(R.id.tv);
         register = findViewById(R.id.register);
         editTextPhoneNo = findViewById(R.id.editTextPhoneNo);
         editTextUserName = findViewById(R.id.editTextUserName);
+        editTextBikeNo = findViewById(R.id.editTextBikeNo);
+        editTextLicense = findViewById(R.id.editTextLicense);
+        editTextRc_Book = findViewById(R.id.editTextRc_Book);
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +76,18 @@ public class Registration extends AppCompatActivity {
                             /*.child("UserName").setValue(editTextUserName.getText().toString())
                             .child("Phone_No").setValue(editTextPhoneNo.getText().toString());*/
 
-                    tempRef.child("UserName").setValue(editTextUserName.getText().toString());
+
+                    tempRef.child("Rc_Book  ").setValue(editTextRc_Book.getText().toString());
+                    tempRef.child("License").setValue(editTextLicense.getText().toString());
+                    tempRef.child("Bike_NO").setValue(editTextBikeNo.getText().toString());
                     tempRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
+                    tempRef.child("UserName").setValue(editTextUserName.getText().toString());
+
+
+
+
+
+
 
 
                     Toast.makeText(getBaseContext(), "Register as a Driver.", Toast.LENGTH_SHORT).show();
@@ -89,9 +101,9 @@ public class Registration extends AppCompatActivity {
                     tempRef = riderRef.child(editTextPhoneNo.getText().toString());
                             /*.child("UserName").setValue(editTextUserName.getText().toString())
                             .child("Phone_No").setValue(editTextPhoneNo.getText().toString());*/
-
-                    tempRef.child("UserName").setValue(editTextUserName.getText().toString());
                     tempRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
+                    tempRef.child("UserName").setValue(editTextUserName.getText().toString());
+
 
                     Toast.makeText(getBaseContext(), "Register as a Rider.", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: 3");
@@ -112,15 +124,15 @@ public class Registration extends AppCompatActivity {
 
                     tv1.setText("Driver Registration");
                     tv.setText("Disable button to register for Rider....");
-                    bikeno.setVisibility(View.VISIBLE);
-                    license.setVisibility(View.VISIBLE);
-                    rc_book.setVisibility(View.VISIBLE);
+                    editTextBikeNo.setVisibility(View.VISIBLE);
+                    editTextLicense.setVisibility(View.VISIBLE);
+                    editTextRc_Book.setVisibility(View.VISIBLE);
                 } else {
                     tv1.setText("Rider Registration");
                     tv.setText("Enable button to register for Driver....");
-                    bikeno.setVisibility(View.GONE);
-                    license.setVisibility(View.GONE);
-                    rc_book.setVisibility(View.GONE);
+                    editTextBikeNo.setVisibility(View.GONE);
+                    editTextLicense.setVisibility(View.GONE);
+                    editTextRc_Book.setVisibility(View.GONE);
                 }
             }
 

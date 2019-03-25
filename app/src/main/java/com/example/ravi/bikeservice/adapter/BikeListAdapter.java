@@ -58,9 +58,9 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
     private void showDialogBox(int position){
 
         builder = new AlertDialog.Builder(context);
-        builder.setMessage(listdata.get(position).getUserName()+"\n"+listdata.get(position).getPhoneNo()) .setTitle("Driver Data")
+        builder.setMessage("\nName : "+listdata.get(position).getUserName()+"\n\nPhone_NO : "+listdata.get(position).getPhoneNo()+"\n\nBike_NO : "+listdata.get(position).getBike_NO()) .setTitle("Driver Data")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Select", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

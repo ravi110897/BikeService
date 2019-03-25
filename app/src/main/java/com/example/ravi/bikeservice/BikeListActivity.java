@@ -70,6 +70,12 @@ public class BikeListActivity extends AppCompatActivity {
                     } else {
                         userModel.setPhoneNo(dataSnapshot1.child("Phone_No").getValue().toString());
                     }
+
+                    if (dataSnapshot1.child("Bike_NO").getValue() == null) {
+                        userModel.setBike_No("empty");
+                    } else {
+                        userModel.setBike_No(dataSnapshot1.child("Bike_NO").getValue().toString());
+                    }
                     userModels.add(userModel);
                     Log.d(TAG, "onDataChange: called ak 1:" + userModels.size());
                 }
