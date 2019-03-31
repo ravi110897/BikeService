@@ -12,6 +12,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ravi.bikeservice.prefs.SharedPrefs;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -173,7 +174,8 @@ public class Registration extends AppCompatActivity {
 
 
                         Toast.makeText(getBaseContext(), "Register as a Driver.", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onClick: 2");
+                        SharedPrefs.setFirstLogin(true);
+                        SharedPrefs.setIsDriver(true);
                         Intent c = new Intent(Registration.this, DriverMapActivity.class);
                         startActivity(c);
                     }
@@ -202,23 +204,10 @@ public class Registration extends AppCompatActivity {
                         editTextPhoneNo.requestFocus();
                         editTextPhoneNo.setError("ENTER THE PROPER NUMBER");
                     }
-                  /*  else if(etBikeNo.length()==0)
+                else
                     {
-                        editTextBikeNo.requestFocus();
-                        editTextBikeNo.setError("FIELD CANNOT BE EMPTY");
-                    }
-                    else if(etLicense.length()==0)
-                    {
-                        editTextLicense.requestFocus();
-                        editTextLicense.setError("FIELD CANNOT BE EMPTY");
-                    }
-                    else if(etRc_Book.length()==0)
-                    {
-                        editTextRc_Book.requestFocus();
-                        editTextRc_Book.setError("FIELD CANNOT BE EMPTY");
-                    }
-                  */  else
-                    {
+
+
                         Toast.makeText(Registration.this,"Validation Successful",Toast.LENGTH_LONG).show();
                         DatabaseReference tempRef = null;
 //                    driverRef.child("Rider").push().setValue(1213);
@@ -228,6 +217,7 @@ public class Registration extends AppCompatActivity {
                         tempRef.child("Phone_No").setValue(editTextPhoneNo.getText().toString());
                         tempRef.child("UserName").setValue(editTextUserName.getText().toString());
 
+                        SharedPrefs.setFirstLogin(true);
 
                         Toast.makeText(getBaseContext(), "Register as a Rider.", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onClick: 3");
@@ -268,7 +258,9 @@ public class Registration extends AppCompatActivity {
 
 
 
+
     }
+
 
 
 }

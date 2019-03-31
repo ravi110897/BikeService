@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.ravi.bikeservice.prefs.SharedPrefs;
+
 public class Splash extends AppCompatActivity {
     Thread SplashThread;
     @Override
@@ -32,5 +34,9 @@ public class Splash extends AppCompatActivity {
         };
         SplashThread.start();
     }
+
+
+
+    
 
 }

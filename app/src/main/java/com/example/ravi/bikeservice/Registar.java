@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.ravi.bikeservice.prefs.SharedPrefs;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +25,6 @@ public class Registar extends AppCompatActivity {
         setContentView(R.layout.activity_registar);
 
 
-
-
         registration = (Button) findViewById(R.id.registration);
         registration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,5 +34,23 @@ public class Registar extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (SharedPrefs.getFirstLogin()) {
+            if (SharedPrefs.getIsDriver()) {
+                Intent c = new Intent(Registar.this, DriverMapActivity.class);
+                startActivity(c);
+
+            } else {
+                Intent c = new Intent(Registar.this, RiderMapsActivity.class);
+                startActivity(c);
+
+            }
+        }
+
     }
 }
