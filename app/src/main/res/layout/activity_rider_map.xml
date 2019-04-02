@@ -43,5 +43,5 @@
         android:onClick="search"
         android:text="Search"
         android:textSize="20sp"
-        android:background="#bad7df"/>
+        android:background="@drawable/round_edge_button"/>
 </RelativeLayout>

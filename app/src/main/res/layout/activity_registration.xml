@@ -107,7 +107,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="50dp"
-            android:background="#bad7df"
+            android:background="@drawable/round_edge_button"
             android:text="Register"
             android:textSize="25dp" />
     </LinearLayout>
