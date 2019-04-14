@@ -3,6 +3,7 @@ package com.example.ravi.bikeservice.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,9 +19,18 @@ import com.example.ravi.bikeservice.R;
 import com.example.ravi.bikeservice.pojo_modal.BikeListData;
 import com.example.ravi.bikeservice.pojo_modal.UserModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
-
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHolder> {
@@ -28,6 +38,21 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
     private List<UserModel> listdata;
     private  AlertDialog.Builder builder;
     private Context context;
+    private static final String TOKEN = "";
+    private static final String KEY_BODY = "body";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_ICON = "icon";
+    private static final String KEY_MESSAGE = "message";
+    private static final String KEY_NOTIFICATION = "notification";
+    private static final String KEY_DATA = "data";
+    private static final String KEY_REGEISTERATION_IDS = "registration_ids";
+    private static final String KEY_SUCCESS = "success";
+    private static final String KEY_FAILURE = "failure";
+    private static final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
+    private static final String MEDIA_TYPE = "application/json; charset=utf-8";
+    private static final String SERVER_KEY = "";
+    private static final String AUTHORIZATION = "Authorization";
+    private OkHttpClient mClient;
 
     // RecyclerView recyclerView;
     public BikeListAdapter(List<UserModel> listdata, Context context) {
@@ -63,7 +88,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
                 .setPositiveButton("Select", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                          sendNotification();
 
                     }
                 })
@@ -79,11 +104,83 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
 
 
     }
+        //sending notification from server using fcm(firebase cloud message)
+    private void sendNotification() {
 
+        putDataTOJson();
 
+    }
 
+    private void putDataTOJson() {
+        mClient = new  OkHttpClient();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(TOKEN);
+        sendMessage(jsonArray, "Hello", "How r u", "Http:\\google.com", "My Name is Vishal");
+    }
 
+    private void sendMessage(final JSONArray recipients, final String body, final String title, final String icon, final String message) {
 
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject resultJson = new JSONObject(s);
+                    int success = resultJson.getInt(KEY_SUCCESS);
+                    int failure = resultJson.getInt(KEY_FAILURE);
+                    if (success == 1) {
+                        showToastMessage("pass");
+                    } else {
+                        showToastMessage("fail");
+                    }
+                }catch (Exception JSONException) {
+                    showToastMessage("Exception");
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    JSONObject root = new JSONObject();
+                    JSONObject notification = new JSONObject();
+                    notification.put(KEY_BODY, body);
+                    notification.put(KEY_TITLE, title);
+                    notification.put(KEY_ICON, icon);
+
+                    JSONObject data = new JSONObject();
+                    data.put(KEY_MESSAGE, message);
+                    root.put(KEY_NOTIFICATION, notification);
+                    root.put(KEY_DATA, data);
+                    root.put(KEY_REGEISTERATION_IDS, recipients);
+
+                   String result = postToFCM(root.toString());
+                    return result;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+        };
+    }
+
+    private void showToastMessage(String pass) {
+
+        Toast.makeText(context,pass, Toast.LENGTH_SHORT).show();
+    }
+
+    private String postToFCM(String s)throws IOException {
+        MediaType JSON = MediaType.parse(MEDIA_TYPE);
+        RequestBody body = RequestBody.create(JSON, s);
+        Request request = new Request.Builder()
+                .url(FCM_MESSAGE_URL)
+                .post(body)
+                .addHeader(AUTHORIZATION, SERVER_KEY)
+                .build();
+        Response response = mClient.newCall(request).execute();
+        return response.body().string();
+
+    }
 
     @Override
     public int getItemCount() {
@@ -112,6 +209,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
         }
     }
+
 
 
 
