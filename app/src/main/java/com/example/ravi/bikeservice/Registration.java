@@ -12,6 +12,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ravi.bikeservice.app.App;
 import com.example.ravi.bikeservice.prefs.SharedPrefs;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -237,7 +238,7 @@ public class Registration extends AppCompatActivity {
                 isdriver = isChecked;
 
                 if (isChecked) {
-
+                    App.getInstance().setDriver(isChecked);
                     tv1.setText("Driver Registration");
                     tv.setText("Disable button to register for Rider....");
                     editTextBikeNo.setVisibility(View.VISIBLE);

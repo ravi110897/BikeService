@@ -90,21 +90,6 @@ public class BikeListActivity extends AppCompatActivity {
         });
 
 
-        BikeListData[] myListData = new BikeListData[]{
 
-
-                /*new BikeListData("Raj.", android.R.drawable.ic_dialog_email),
-                new BikeListData("Rohit.", android.R.drawable.ic_dialog_info),
-                new BikeListData("Adi.", android.R.drawable.ic_delete),
-                new BikeListData("Ram.", android.R.drawable.ic_dialog_dialer),
-                new BikeListData("Rohan.", android.R.drawable.ic_dialog_alert),
-                new BikeListData("Yesh.", android.R.drawable.ic_dialog_map),
-                new BikeListData("Deep.", android.R.drawable.ic_dialog_email),
-                new BikeListData("Mass.", android.R.drawable.ic_dialog_info),
-                new BikeListData("Khushal.", android.R.drawable.ic_delete),
-                new BikeListData("Ajay.", android.R.drawable.ic_dialog_dialer),
-                new BikeListData("Kevin.", android.R.drawable.ic_dialog_alert),
-                new BikeListData("Shub.", android.R.drawable.ic_dialog_map),*/
-        };
     }
 }
