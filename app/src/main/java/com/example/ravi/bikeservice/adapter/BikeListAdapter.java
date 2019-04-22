@@ -72,7 +72,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.textView.setText(listdata.get(position).getUserName());
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogBox(position);

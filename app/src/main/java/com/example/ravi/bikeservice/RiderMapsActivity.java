@@ -192,6 +192,8 @@ public class RiderMapsActivity extends FragmentActivity implements OnMapReadyCal
         if (null !=marker) {
             marker.remove();
         }
+
+
         EditText editText=findViewById(R.id.locationid);
         String location=editText.getText().toString();
 
@@ -257,6 +259,14 @@ public class RiderMapsActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onPolylineClick(Polyline polyline) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 }
 
