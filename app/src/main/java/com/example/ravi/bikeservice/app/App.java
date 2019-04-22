@@ -4,6 +4,16 @@ import android.app.Application;
 
 public class App extends Application {
 
+    private boolean isDriver;
+
+    public boolean isDriver() {
+        return isDriver;
+    }
+
+    public void setDriver(boolean driver) {
+        isDriver = driver;
+    }
+
     private static App instance;
     @Override
     public void onCreate() {
@@ -15,4 +25,6 @@ public class App extends Application {
     public static App getInstance(){
         return instance;
     }
+
+
 }
