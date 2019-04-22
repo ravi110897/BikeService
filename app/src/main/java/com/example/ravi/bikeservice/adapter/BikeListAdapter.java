@@ -38,7 +38,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
     private List<UserModel> listdata;
     private  AlertDialog.Builder builder;
     private Context context;
-    private static final String TOKEN = "cdRfD3cOR54:APA91bFzOtky7z5x1N5yUyaSJqLxnmMkRcm3HzCw10TKiQWSRoEKwjOd7bSWPgkVnO4UpqE9ZHJnPy9xQc-92olHnpH6O4-FSBudegLuOImoDB9WBkyBSavVYHYO5I4YHNc3groEHL0o";
+    private static final String TOKEN = "";
     private static final String KEY_BODY = "body";
     private static final String KEY_TITLE = "title";
     private static final String KEY_ICON = "icon";
@@ -50,7 +50,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
     private static final String KEY_FAILURE = "failure";
     private static final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
     private static final String MEDIA_TYPE = "application/json; charset=utf-8";
-    private static final String SERVER_KEY = "key=AAAA2y_fGKI:APA91bETX8xCvNISVbYTEd6pSdeoUwLJ94Y33OuzFu-IqU-Zge4f_Yb2mJ7l10V9uZzZ6Gulqcac7GBTqHnha7MKUxrwPSVir6wus7617b4udjkJq5MOVXSVzRKFa9Wi3MgawJOjmyVk";
+    private static final String SERVER_KEY = "";
     private static final String AUTHORIZATION = "Authorization";
     private OkHttpClient mClient;
 
@@ -107,13 +107,11 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
         //sending notification from server using fcm(firebase cloud message)
     private void sendNotification() {
 
-        Log.d(TAG, "sendNotification: 1");
         putDataTOJson();
 
     }
 
     private void putDataTOJson() {
-        Log.d(TAG, "sendNotification: 2");
         mClient = new  OkHttpClient();
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(TOKEN);
@@ -121,13 +119,12 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
     }
 
     private void sendMessage(final JSONArray recipients, final String body, final String title, final String icon, final String message) {
-        Log.d(TAG, "sendNotification: 3");
+
         new AsyncTask<Void, Void, String>() {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 try {
-                    Log.d(TAG, "sendNotification: 4:"+s);
                     JSONObject resultJson = new JSONObject(s);
                     int success = resultJson.getInt(KEY_SUCCESS);
                     int failure = resultJson.getInt(KEY_FAILURE);
@@ -144,7 +141,6 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
             @Override
             protected String doInBackground(Void... voids) {
                 try {
-                    Log.d(TAG, "sendNotification: 5");
                     JSONObject root = new JSONObject();
                     JSONObject notification = new JSONObject();
                     notification.put(KEY_BODY, body);
@@ -165,7 +161,7 @@ public class BikeListAdapter extends RecyclerView.Adapter<BikeListAdapter.ViewHo
 
                 return null;
             }
-        }.execute();
+        };
     }
 
     private void showToastMessage(String pass) {

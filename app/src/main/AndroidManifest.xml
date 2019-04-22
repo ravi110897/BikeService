@@ -56,7 +56,6 @@
         <activity android:name=".RiderMapsActivity" />
         <activity android:name=".BikeListActivity" />
         <activity android:name=".DriverMapActivity"></activity>
-        <activity android:name=".NA"/>
 
         <service
             android:name=".service.FireBaseMsgService"
